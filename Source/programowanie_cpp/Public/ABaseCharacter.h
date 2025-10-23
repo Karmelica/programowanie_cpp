@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include <EnhancedPlayerInput.h>
 #include "ABaseCharacter.generated.h"
 
 UCLASS()
@@ -11,11 +12,15 @@ class PROGRAMOWANIE_CPP_API AABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+
+
 public:
+
 	// Sets default values for this character's properties
 	AABaseCharacter();
 
 protected:
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 

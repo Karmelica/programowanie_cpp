@@ -13,5 +13,5 @@ UCLASS()
 class PROGRAMOWANIE_CPP_API AABasePlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
 };
