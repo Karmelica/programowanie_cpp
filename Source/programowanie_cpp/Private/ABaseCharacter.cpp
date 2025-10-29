@@ -15,7 +15,6 @@ AABaseCharacter::AABaseCharacter()
 void AABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ABaseCharacter.h"
+#include "InputMappingContext.h"
 #include "ABasePlayerCharacter.generated.h"
 
 /**
@@ -27,5 +28,7 @@ public:
 	UInputAction* InteractAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	UInputAction* AttackAction;
-	
+
+protected:
+	virtual void BeginPlay() override;
 };

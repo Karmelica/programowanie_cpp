@@ -3,3 +3,8 @@
 
 #include "ABasePlayerCharacter.h"
 
+void AABasePlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	UE_LOG(LogTemp, Display, TEXT("Test message 123"));
+}
