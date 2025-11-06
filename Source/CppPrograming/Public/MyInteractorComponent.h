@@ -6,7 +6,6 @@
 #include "Components/ActorComponent.h"
 #include "MyInteractorComponent.generated.h"
 
-class UStaticMeshSocket;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CPPPROGRAMING_API UMyInteractorComponent : public UActorComponent
@@ -27,7 +26,4 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	IInterface* IInteract;
-
-	UPROPERTY(EditAnywhere, Category="Sockets")
-	UStaticMeshSocket* TargetSocket;
 };
