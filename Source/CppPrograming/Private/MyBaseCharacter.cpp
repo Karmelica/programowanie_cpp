@@ -18,6 +18,10 @@ void AMyBaseCharacter::BeginPlay()
 	
 }
 
+void AMyBaseCharacter::Attack()
+{
+}
+
 // Called every frame
 void AMyBaseCharacter::Tick(float DeltaTime)
 {

@@ -58,6 +58,11 @@ void AMyPlayerCharacter::Interact()
 	//Cast<IMyInterface>(this)->InteractionInterface();
 }
 
+void AMyPlayerCharacter::Attack()
+{
+	Super::Attack();
+}
+
 void AMyPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -76,6 +81,7 @@ void AMyPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Look);
 		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		Input->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Interact);
+		Input->BindAction(AttackAction, ETriggerEvent::Started, this, &AMyPlayerCharacter::Attack);
 
 	}
 }

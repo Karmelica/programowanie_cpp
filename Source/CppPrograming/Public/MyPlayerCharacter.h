@@ -20,9 +20,12 @@ class CPPPROGRAMING_API AMyPlayerCharacter : public AMyBaseCharacter
 protected:
 	AMyPlayerCharacter();
 
+
+
 	void Move(const FInputActionValue& InputActionValue);
 	void Look(const FInputActionValue& InputActionValue);
 	void Interact();
+	virtual void Attack() override;
 
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 

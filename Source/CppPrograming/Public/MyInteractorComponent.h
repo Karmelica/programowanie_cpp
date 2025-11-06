@@ -4,22 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "MyInteractor.generated.h"
+#include "MyInteractorComponent.generated.h"
 
 class UStaticMeshSocket;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CPPPROGRAMING_API UMyInteractor : public UActorComponent
+class CPPPROGRAMING_API UMyInteractorComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
-	UMyInteractor();
+	
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	UMyInteractorComponent();
 
 public:	
 	// Called every frame
