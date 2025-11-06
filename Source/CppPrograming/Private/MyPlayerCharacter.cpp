@@ -4,6 +4,7 @@
 #include "MyPlayerCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "PlayerInterface.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -44,11 +45,17 @@ void AMyPlayerCharacter::Move(const FInputActionValue& InputActionValue)
 void AMyPlayerCharacter::Look(const FInputActionValue& InputActionValue)
 {
 	FVector2D LookValue = InputActionValue.Get<FVector2D>();
+
 	if (Controller)
 	{
 		AddControllerYawInput(LookValue.X);
 		AddControllerPitchInput(-LookValue.Y);
 	}
+}
+
+void AMyPlayerCharacter::Interact()
+{
+	//Cast<IMyInterface>(this)->InteractionInterface();
 }
 
 void AMyPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -68,6 +75,7 @@ void AMyPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Move);
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Look);
 		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		Input->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Interact);
 
 	}
 }

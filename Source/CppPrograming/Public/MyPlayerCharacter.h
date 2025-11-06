@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
+
 
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
@@ -22,6 +22,7 @@ protected:
 
 	void Move(const FInputActionValue& InputActionValue);
 	void Look(const FInputActionValue& InputActionValue);
+	void Interact();
 
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
