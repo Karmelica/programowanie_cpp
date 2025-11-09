@@ -28,7 +28,12 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	void SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon);
+
 	UPROPERTY(VisibleAnywhere)
 	AMyBaseWeapon* EquippedWeapon;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* AttackMontage;
+
+	void SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon);
 };

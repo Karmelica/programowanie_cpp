@@ -20,6 +20,8 @@ void AMyBaseCharacter::BeginPlay()
 
 void AMyBaseCharacter::Attack()
 {
+	if (!AttackMontage) return;
+	PlayAnimMontage(AttackMontage);
 }
 
 // Called every frame
