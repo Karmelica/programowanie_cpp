@@ -3,6 +3,10 @@
 
 #include "MyInteractorComponent.h"
 
+#include "MyPlayerCharacter.h"
+#include "PlayerInterface.h"
+#include "Kismet/KismetSystemLibrary.h"
+
 
 // Sets default values for this component's properties
 UMyInteractorComponent::UMyInteractorComponent()
@@ -31,6 +35,47 @@ void UMyInteractorComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UMyInteractorComponent::TryInteract()
+{
+	FHitResult SphereHit;
+	SphereTrace(SphereHit);
+
+	AActor* HitActor = SphereHit.GetActor();
+	if (!HitActor) return;
+	if (HitActor->Implements<UInteractableInterface>())
+	{
+		IInteractableInterface::Execute_Interact(HitActor, GetOwner());
+		IgnoreActors.Add(HitActor);
+	}
+}
+
+void UMyInteractorComponent::SphereTrace(FHitResult& SphereHit)
+{
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(GetOwner());
+	for (AActor* Actor : IgnoreActors)
+	{
+		ActorsToIgnore.AddUnique(Actor);
+	}
+	AMyPlayerCharacter* CppOwner = Cast<AMyPlayerCharacter>(GetOwner());
+
+	FVector EndTrace = CppOwner->GetCameraLocation() + (CppOwner->GetCameraForwardVector() * 500.f);
+
+	TraceSphereRadius = 50.f;
+	UKismetSystemLibrary::SphereTraceSingle(
+		this,
+		CppOwner->GetCameraLocation(),
+		EndTrace,
+		TraceSphereRadius,
+		UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_WorldDynamic),
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::ForDuration,
+		SphereHit,
+		true
+	);
 }
 
 

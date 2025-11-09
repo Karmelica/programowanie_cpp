@@ -36,3 +36,8 @@ void AMyBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 }
 
+void AMyBaseCharacter::SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon)
+{
+	EquippedWeapon = MyBaseWeapon;
+}
+

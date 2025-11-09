@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "MyBaseCharacter.generated.h"
 
+class AMyBaseWeapon;
+
 UCLASS()
 class CPPPROGRAMING_API AMyBaseCharacter : public ACharacter
 {
@@ -26,5 +28,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	void SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon);
+	UPROPERTY(VisibleAnywhere)
+	AMyBaseWeapon* EquippedWeapon;
 };

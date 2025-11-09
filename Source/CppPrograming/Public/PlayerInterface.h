@@ -3,22 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Interface.h"
 #include "PlayerInterface.generated.h"
 
-/**
- * 
- */
+
 UINTERFACE(MinimalAPI, Blueprintable)
-class UMyInterface : public UInterface
+class UInteractableInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class IMyInterface
+class IInteractableInterface
 {
 	GENERATED_BODY()
 
 public:
-	virtual void InteractionInterface() = 0;
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Interaction")
+	void Interact(AActor* OuterActor);
 };

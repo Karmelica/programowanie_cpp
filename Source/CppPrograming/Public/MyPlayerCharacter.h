@@ -7,6 +7,7 @@
 #include "MyBaseCharacter.h"
 #include "MyPlayerCharacter.generated.h"
 
+class UMyInteractorComponent;
 class UCameraComponent;
 class USpringArmComponent;
 class UInputAction;
@@ -20,14 +21,15 @@ class CPPPROGRAMING_API AMyPlayerCharacter : public AMyBaseCharacter
 protected:
 	AMyPlayerCharacter();
 
+	virtual void BeginPlay() override;
 
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 	void Move(const FInputActionValue& InputActionValue);
 	void Look(const FInputActionValue& InputActionValue);
-	void Interact();
+	void PlayerInteract();
 	virtual void Attack() override;
 
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputMappingContext* DefaultMappingContext;
@@ -53,5 +55,11 @@ private:
 	USpringArmComponent* CameraBoom;
 	UPROPERTY(EditAnywhere)
 	UCameraComponent* ViewCamera;
+	UPROPERTY(EditAnywhere)
+	UMyInteractorComponent* InteractorComponent;
 
+public:
+	UMyInteractorComponent* GetInteractorComponent() const { return InteractorComponent; }
+	FVector GetCameraLocation();
+	FVector GetCameraForwardVector();
 };

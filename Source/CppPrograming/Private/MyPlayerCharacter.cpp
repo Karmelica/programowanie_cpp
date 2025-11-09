@@ -4,9 +4,9 @@
 #include "MyPlayerCharacter.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "MyInteractorComponent.h"
 
 
 AMyPlayerCharacter::AMyPlayerCharacter()
@@ -18,6 +18,13 @@ AMyPlayerCharacter::AMyPlayerCharacter()
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("ViewCamera"));
 	ViewCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	ViewCamera->bUsePawnControlRotation = false;
+	InteractorComponent = CreateDefaultSubobject<UMyInteractorComponent>(TEXT("InteractorComponent"));
+
+}
+
+void AMyPlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 void AMyPlayerCharacter::Move(const FInputActionValue& InputActionValue)
@@ -52,14 +59,24 @@ void AMyPlayerCharacter::Look(const FInputActionValue& InputActionValue)
 	}
 }
 
-void AMyPlayerCharacter::Interact()
+void AMyPlayerCharacter::PlayerInteract()
 {
-	//Cast<IMyInterface>(this)->InteractionInterface();
+	InteractorComponent->TryInteract();
 }
 
 void AMyPlayerCharacter::Attack()
 {
 	Super::Attack();
+}
+
+FVector AMyPlayerCharacter::GetCameraLocation()
+{
+	return ViewCamera->GetComponentLocation();
+}
+
+FVector AMyPlayerCharacter::GetCameraForwardVector()
+{
+	return ViewCamera->GetForwardVector();
 }
 
 void AMyPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -78,8 +95,8 @@ void AMyPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Move);
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Look);
-		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
-		Input->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Interact);
+		Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		Input->BindAction(InteractAction, ETriggerEvent::Started, this, &AMyPlayerCharacter::PlayerInteract);
 		Input->BindAction(AttackAction, ETriggerEvent::Started, this, &AMyPlayerCharacter::Attack);
 
 	}
