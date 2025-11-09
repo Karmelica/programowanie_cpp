@@ -6,12 +6,19 @@
 #include "GameFramework/PlayerController.h"
 #include "MyPlayerController.generated.h"
 
-/**
- * 
- */
+class UInputMappingContext;
+
 UCLASS()
 class CPPPROGRAMING_API AMyPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+protected:
+
+	/** Input Mapping Contexts */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
+	TArray<UInputMappingContext*> DefaultMappingContexts;
+
+	/** Input mapping context setup */
+	virtual void SetupInputComponent() override;
 };
