@@ -63,14 +63,29 @@ void UMyInteractorComponent::SphereTrace(FHitResult& SphereHit)
 
 	FVector EndTrace = CppOwner->GetCameraLocation() + (CppOwner->GetCameraForwardVector() * 500.f);
 
-	TraceSphereRadius = 50.f;
+	/*SphereTraceSingle(
+		 const UObject * WorldContextObject,
+		 const FVector Start,
+		 const FVector End,
+		 float Radius,
+		 ETraceTypeQuery TraceChannel,
+		 bool bTraceComplex,
+		 const TArray<AActor*>&ActorsToIgnore,
+		 EDrawDebugTrace::Type DrawDebugType,
+		 FHitResult & OutHit,
+		 bool bIgnoreSelf,
+		 FLinearColor TraceColor,
+		 FLinearColor TraceHitColor,
+		 float DrawTime)
+	 */
+
 	UKismetSystemLibrary::SphereTraceSingle(
 		this,
 		CppOwner->GetCameraLocation(),
 		EndTrace,
 		TraceSphereRadius,
-		UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_WorldDynamic),
-		false,
+		UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		true,
 		ActorsToIgnore,
 		EDrawDebugTrace::ForDuration,
 		SphereHit,
