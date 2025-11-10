@@ -19,12 +19,38 @@ protected:
 	void AttachToSocket(USceneComponent* InParent, FName& InSocketName);
 	void Equip(AActor* OuterActor);
 
+	// Scene components do œledzenia pozycji œladu kolizji
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+	USceneComponent* TraceStart;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+	USceneComponent* TraceEnd;
+
+	// Lista aktorów ju¿ trafionych w tej serii ataków
+	UPROPERTY()
+	TArray<AActor*> HitActors;
+
+	// Funkcja wykonuj¹ca box trace
+	void BoxTrace(FHitResult& OutHit);
+
+	// Funkcja wywo³ywana przy trafieniu
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void OnHit(const FHitResult& HitResult);
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Properties")
 	FName MainSocketName = FName("hand_RSocket");
 
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* SwordHitbox;
+
+	// Rozmiar box trace
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	FVector BoxTraceExtent = FVector(5.f, 5.f, 5.f);
+
+	// Czy pokazywaæ debug trace
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	bool bShowDebugTrace = false;
 
 	virtual void Interact_Implementation(AActor* OuterActor) override;
 
@@ -34,4 +60,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void DisableHitbox();
+
+	// Wywo³ywane co klatkê podczas ataku
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void PerformBoxTrace();
+
+	// Czyœci listê trafionych aktorów (wywo³aj na pocz¹tku nowego ataku)
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void ClearHitActors();
 };

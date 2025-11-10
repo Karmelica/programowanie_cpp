@@ -10,7 +10,7 @@
 class AMyBaseWeapon;
 class UAttributesComponent;
 
-UCLASS()
+UCLASS(Blueprintable)
 class CPPPROGRAMING_API AMyBaseCharacter : public ACharacter, public ICombatInterface
 {
 	GENERATED_BODY()
@@ -18,6 +18,11 @@ class CPPPROGRAMING_API AMyBaseCharacter : public ACharacter, public ICombatInte
 public:
 	// Sets default values for this character's properties
 	AMyBaseCharacter();
+	virtual void GetHit_Implementation(float DamageAmount) override;
+
+	void SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon);
+
+	void SetCanAttack(bool bAttack);
 
 protected:
 	// Called when the game starts or when spawned
@@ -30,20 +35,26 @@ protected:
 	UFUNCTION()
 	virtual void HandleDeath();
 
+	// Funkcja wywo³ywana po zakoñczeniu animacji œmierci
+	UFUNCTION()
+	void OnDeathMontageEnded(UAnimMontage* Montage, bool bInterrupted);
+
+	bool bCanAttack = true;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void GetHit_Implementation(float DamageAmount) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	void SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon);
 
 	UPROPERTY(VisibleAnywhere)
 	AMyBaseWeapon* EquippedWeapon;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* AttackMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* DeathMontage;
+
 };

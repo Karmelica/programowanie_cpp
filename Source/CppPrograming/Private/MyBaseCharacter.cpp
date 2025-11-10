@@ -4,6 +4,8 @@
 #include "MyBaseCharacter.h"
 #include "MyBaseWeapon.h"
 #include "AttributesComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AMyBaseCharacter::AMyBaseCharacter()
@@ -29,7 +31,7 @@ void AMyBaseCharacter::BeginPlay()
 
 void AMyBaseCharacter::Attack()
 {
-	if (!AttackMontage) return;
+	if (!AttackMontage || !bCanAttack) return;
 	PlayAnimMontage(AttackMontage);
 }
 
@@ -51,7 +53,59 @@ void AMyBaseCharacter::GetHit_Implementation(float DamageAmount)
 void AMyBaseCharacter::HandleDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s HandleDeath() called"), *GetName());
-	// Override this in child classes to implement specific death behavior
+	
+	if (!DeathMontage) 
+	{
+		// Jeœli nie ma animacji œmierci, od razu zniszcz postaæ
+		Destroy();
+		return;
+	}
+
+	// Wy³¹cz input
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (PC)
+	{
+		DisableInput(PC);
+		UE_LOG(LogTemp, Warning, TEXT("Input disabled for %s"), *GetName());
+	}
+
+	// Zatrzymaj ruch postaci
+	GetCharacterMovement()->DisableMovement();
+	GetCharacterMovement()->StopMovementImmediately();
+
+	// Wy³¹cz kolizjê z postaciami
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+	
+	// Zagraj animacjê œmierci
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance)
+	{
+		// Podepnij callback do zakoñczenia monta¿u
+		FOnMontageEnded MontageEndDelegate;
+		MontageEndDelegate.BindUObject(this, &AMyBaseCharacter::OnDeathMontageEnded);
+		AnimInstance->Montage_SetEndDelegate(MontageEndDelegate, DeathMontage);
+		
+		// Odtwórz monta¿ œmierci
+		PlayAnimMontage(DeathMontage);
+	}
+	else
+	{
+		// Jeœli nie ma AnimInstance, od razu zniszcz
+		Destroy();
+	}
+}
+
+void AMyBaseCharacter::OnDeathMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s Death montage ended, destroying actor"), *GetName());
+	
+	// Zniszcz postaæ po zakoñczeniu animacji
+	Destroy();
+}
+
+void AMyBaseCharacter::SetCanAttack(bool bAttack)
+{
+	bCanAttack = bAttack;
 }
 
 // Called to bind functionality to input

@@ -9,9 +9,9 @@ void UEnableHitbox::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* 
 	const FAnimNotifyEventReference& EventReference)
 {
 	Super::Notify(MeshComp, Animation, EventReference);
-	
+
 	if (!MeshComp) return;
-	
+
 	// Pobierz w≥aúciciela SkeletalMeshComponent (powinien to byÊ Character)
 	AActor* Owner = MeshComp->GetOwner();
 	if (!Owner) return;
@@ -19,12 +19,15 @@ void UEnableHitbox::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* 
 	// Sprawdü czy w≥aúciciel to AMyBaseCharacter
 	AMyBaseCharacter* Character = Cast<AMyBaseCharacter>(Owner);
 	if (!Character) return;
-	
+
+	Character->SetCanAttack(true);
+
 	// Pobierz ekwipowanπ broÒ
 	AMyBaseWeapon* Weapon = Character->EquippedWeapon;
 	if (!Weapon) return;
-	
-	// W≥πcz hitbox broni
+
+	// WyczyúÊ listÍ trafionych aktorÛw i w≥πcz hitbox
+	Weapon->ClearHitActors();
 	Weapon->EnableHitbox();
 	UE_LOG(LogTemp, Warning, TEXT("EnableHitbox Notify - Hitbox enabled for %s"), *Character->GetName());
 }
