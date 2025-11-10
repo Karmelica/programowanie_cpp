@@ -44,10 +44,6 @@ public:
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* SwordHitbox;
 
-	// Rozmiar box trace
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
-	FVector BoxTraceExtent = FVector(5.f, 5.f, 5.f);
-
 	// Czy pokazywaæ debug trace
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool bShowDebugTrace = false;

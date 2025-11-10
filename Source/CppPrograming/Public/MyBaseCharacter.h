@@ -35,10 +35,6 @@ protected:
 	UFUNCTION()
 	virtual void HandleDeath();
 
-	// Funkcja wywo³ywana po zakoñczeniu animacji œmierci
-	UFUNCTION()
-	void OnDeathMontageEnded(UAnimMontage* Montage, bool bInterrupted);
-
 	bool bCanAttack = true;
 
 public:	

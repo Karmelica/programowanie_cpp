@@ -5,7 +5,6 @@
 
 #include "MyBaseCharacter.h"
 #include "Components/BoxComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"
 
@@ -63,10 +62,16 @@ void AMyBaseWeapon::DisableHitbox()
 
 void AMyBaseWeapon::BoxTrace(FHitResult& OutHit)
 {
-	if (!TraceStart || !TraceEnd) return;
+	if (!TraceStart || !TraceEnd || !SwordHitbox) return;
 
 	const FVector Start = TraceStart->GetComponentLocation();
 	const FVector End = TraceEnd->GetComponentLocation();
+	
+	// Pobierz wymiary box collider z SwordHitbox
+	const FVector BoxExtent = SwordHitbox->GetScaledBoxExtent();
+	
+	// Pobierz rotacjê z SwordHitbox (zamiast z TraceStart)
+	const FRotator BoxRotation = SwordHitbox->GetComponentRotation();
 	
 	// Ustawienie kana³ów kolizji do ignorowania
 	TArray<AActor*> ActorsToIgnore;
@@ -76,13 +81,13 @@ void AMyBaseWeapon::BoxTrace(FHitResult& OutHit)
 	// Dodaj wszystkich ju¿ trafionych aktorów do ignorowania
 	ActorsToIgnore.Append(HitActors);
 
-	// Wykonanie box trace
+	// Wykonanie box trace z wymiarami SwordHitbox
 	const bool bHit = UKismetSystemLibrary::BoxTraceSingle(
 		this,
 		Start,
 		End,
-		BoxTraceExtent,
-		TraceStart->GetComponentRotation(),
+		BoxExtent,
+		BoxRotation,
 		UEngineTypes::ConvertToTraceType(ECC_Pawn),
 		false,
 		ActorsToIgnore,
@@ -111,8 +116,16 @@ void AMyBaseWeapon::OnHit(const FHitResult& HitResult)
 			*HitResult.GetActor()->GetName(), 
 			*HitResult.ImpactPoint.ToString());
 
-		// Opcjonalne: rysowanie punktu trafienia
-		if (bShowDebugTrace)
+		AActor* HitActor = HitResult.GetActor();
+		if (!HitActor) return;
+		if (HitActor->Implements<UCombatInterface>())
+		{
+			ICombatInterface::Execute_GetHit(HitActor, 20.f);
+		}
+		
+
+
+		/*if (bShowDebugTrace)
 		{
 			DrawDebugSphere(
 				GetWorld(),
@@ -123,17 +136,7 @@ void AMyBaseWeapon::OnHit(const FHitResult& HitResult)
 				false,
 				3.0f
 			);
-		}
-
-		// Tutaj mo¿esz dodaæ logikê zadawania obra¿eñ
-		// np. wywo³anie funkcji TakeDamage na trafionym aktorze
-		if (AMyBaseCharacter* HitCharacter = Cast<AMyBaseCharacter>(HitResult.GetActor()))
-		{
-			HitCharacter->GetHit_Implementation(20.f); // Przyk³adowa wartoœæ obra¿eñ
-			UE_LOG(LogTemp, Warning, TEXT("Hit character: %s"), *HitCharacter->GetName());
-		}
-
-
+		}*/
 	}
 }
 
