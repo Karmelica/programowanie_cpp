@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DamageableInterface.h"
 #include "GameFramework/Character.h"
 #include "MyBaseCharacter.generated.h"
 
 class AMyBaseWeapon;
 
 UCLASS()
-class CPPPROGRAMING_API AMyBaseCharacter : public ACharacter
+class CPPPROGRAMING_API AMyBaseCharacter : public ACharacter, public IDamageableInterface
 {
 	GENERATED_BODY()
 
@@ -25,6 +26,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void TakeDamage_Implementation(float DamageAmount) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

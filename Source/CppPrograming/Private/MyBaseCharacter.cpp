@@ -2,6 +2,7 @@
 
 
 #include "MyBaseCharacter.h"
+#include "MyBaseWeapon.h"
 
 // Sets default values
 AMyBaseCharacter::AMyBaseCharacter()
@@ -29,6 +30,11 @@ void AMyBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMyBaseCharacter::TakeDamage_Implementation(float DamageAmount)
+{
+	IDamageableInterface::TakeDamage_Implementation(DamageAmount);
 }
 
 // Called to bind functionality to input
