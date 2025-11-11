@@ -29,7 +29,7 @@ void USetWeaponHitbox::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequen
 	
 	// W³¹cz hitbox broni
 	Weapon->EnableHitbox();
-	UE_LOG(LogTemp, Warning, TEXT("SetWeaponHitbox Notify - Hitbox enabled and hit actors cleared for %s"), *Character->GetName());
+	//UE_LOG(LogTemp, Warning, TEXT("SetWeaponHitbox Notify - Hitbox enabled and hit actors cleared for %s"), *Character->GetName());
 }
 
 void USetWeaponHitbox::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
@@ -53,7 +53,7 @@ void USetWeaponHitbox::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequence
 
 	// Wy³¹cz hitbox broni
 	Weapon->DisableHitbox();
-	UE_LOG(LogTemp, Warning, TEXT("SetWeaponHitbox Notify - Hitbox disabled for %s"), *Character->GetName());
+	//UE_LOG(LogTemp, Warning, TEXT("SetWeaponHitbox Notify - Hitbox disabled for %s"), *Character->GetName());
 }
 
 void USetWeaponHitbox::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,

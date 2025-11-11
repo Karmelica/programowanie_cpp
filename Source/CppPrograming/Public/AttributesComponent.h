@@ -53,4 +53,7 @@ public:
 	// Death delegate
 	UPROPERTY(BlueprintAssignable, Category = "Attributes")
 	FOnDeathSignature OnDeath;
+
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnDeathSignature OnTakeDamage;
 };

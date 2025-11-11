@@ -23,6 +23,7 @@ public:
 	void SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon);
 
 	void SetCanAttack(bool bAttack);
+	void Die();
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,6 +35,8 @@ protected:
 
 	UFUNCTION()
 	virtual void HandleDeath();
+	UFUNCTION()
+	virtual void GetHitAnim();
 
 	bool bCanAttack = true;
 
@@ -52,5 +55,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* DeathMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* TakeDamageMontage;
+
 
 };

@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "DisableHitbox.generated.h"
+#include "KillCharacter.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CPPPROGRAMING_API UDisableHitbox : public UAnimNotify
+class CPPPROGRAMING_API UKillCharacter : public UAnimNotify
 {
 	GENERATED_BODY()
 

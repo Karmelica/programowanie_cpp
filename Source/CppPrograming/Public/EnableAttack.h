@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "EnableHitbox.generated.h"
+#include "EnableAttack.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CPPPROGRAMING_API UEnableHitbox : public UAnimNotify
+class CPPPROGRAMING_API UEnableAttack : public UAnimNotify
 {
 	GENERATED_BODY()
 

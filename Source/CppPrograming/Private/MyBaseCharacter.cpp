@@ -24,6 +24,7 @@ void AMyBaseCharacter::BeginPlay()
 	if (AttributesComponent)
 	{
 		AttributesComponent->OnDeath.AddDynamic(this, &AMyBaseCharacter::HandleDeath);
+		AttributesComponent->OnTakeDamage.AddDynamic(this, &AMyBaseCharacter::GetHitAnim);
 	}
 }
 
@@ -48,6 +49,12 @@ void AMyBaseCharacter::GetHit_Implementation(float DamageAmount)
 	}
 }
 
+void AMyBaseCharacter::GetHitAnim()
+{
+	if (!TakeDamageMontage) return;
+	PlayAnimMontage(TakeDamageMontage);
+}
+
 void AMyBaseCharacter::HandleDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s HandleDeath() called"), *GetName());
@@ -59,6 +66,13 @@ void AMyBaseCharacter::HandleDeath()
 void AMyBaseCharacter::SetCanAttack(bool bAttack)
 {
 	bCanAttack = bAttack;
+}
+
+void AMyBaseCharacter::Die()
+{
+	StopAnimMontage(DeathMontage);
+	UE_LOG(LogTemp, Warning, TEXT("%s Die() called - destroying actor"), *GetName());
+	Destroy();
 }
 
 // Called to bind functionality to input

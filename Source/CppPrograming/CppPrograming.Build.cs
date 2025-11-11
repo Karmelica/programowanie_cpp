@@ -23,13 +23,7 @@ public class CppPrograming : ModuleRules
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
 		PublicIncludePaths.AddRange(new string[] {
-			"CppPrograming",
-			"CppPrograming/Variant_Platforming",
-			"CppPrograming/Variant_Combat",
-			"CppPrograming/Variant_Combat/AI",
-			"CppPrograming/Variant_SideScrolling",
-			"CppPrograming/Variant_SideScrolling/Gameplay",
-			"CppPrograming/Variant_SideScrolling/AI"
+			"CppPrograming"
 		});
 
 		// Uncomment if you are using Slate UI

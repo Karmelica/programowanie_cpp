@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnableHitbox.h"
+#include "DisableAttack.h"
 #include "MyBaseCharacter.h"
 #include "MyBaseWeapon.h"
 
-void UEnableHitbox::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
+void UDisableAttack::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 	const FAnimNotifyEventReference& EventReference)
 {
 	Super::Notify(MeshComp, Animation, EventReference);
@@ -20,14 +20,13 @@ void UEnableHitbox::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* 
 	AMyBaseCharacter* Character = Cast<AMyBaseCharacter>(Owner);
 	if (!Character) return;
 
-	Character->SetCanAttack(true);
+	Character->SetCanAttack(false);
 
 	// Pobierz ekwipowan¹ broñ
 	AMyBaseWeapon* Weapon = Character->EquippedWeapon;
 	if (!Weapon) return;
 
-	// Wyczyœæ listê trafionych aktorów i w³¹cz hitbox
-	Weapon->ClearHitActors();
-	Weapon->EnableHitbox();
-	UE_LOG(LogTemp, Warning, TEXT("EnableHitbox Notify - Hitbox enabled for %s"), *Character->GetName());
+	// Wy³¹cz hitbox broni
+	Weapon->DisableHitbox();
+	//UE_LOG(LogTemp, Warning, TEXT("DisableHitbox Notify - Hitbox disabled for %s"), *Character->GetName());
 }
