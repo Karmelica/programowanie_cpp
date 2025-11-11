@@ -4,6 +4,7 @@
 #include "MyBaseCharacter.h"
 #include "MyBaseWeapon.h"
 #include "AttributesComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AMyBaseCharacter::AMyBaseCharacter()
@@ -30,7 +31,7 @@ void AMyBaseCharacter::BeginPlay()
 
 void AMyBaseCharacter::Attack()
 {
-	if (!AttackMontage || !bCanAttack) return;
+	if (!AttackMontage || !bCanAttack || !EquippedWeapon) return;
 	PlayAnimMontage(AttackMontage);
 }
 
@@ -60,7 +61,10 @@ void AMyBaseCharacter::HandleDeath()
 	UE_LOG(LogTemp, Warning, TEXT("%s HandleDeath() called"), *GetName());
 	if (!DeathMontage) return;
 	PlayAnimMontage(DeathMontage);
-	// Override this in child classes to implement specific death behavior
+	if (UCapsuleComponent* capsule = GetCapsuleComponent())
+	{
+		capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }
 
 void AMyBaseCharacter::SetCanAttack(bool bAttack)

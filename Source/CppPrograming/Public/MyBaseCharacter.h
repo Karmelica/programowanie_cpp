@@ -26,19 +26,19 @@ public:
 	void Die();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	virtual void Attack();
+	bool bCanAttack = true;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAttributesComponent* AttributesComponent;
+
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	virtual void Attack();
 
 	UFUNCTION()
 	virtual void HandleDeath();
 	UFUNCTION()
 	virtual void GetHitAnim();
-
-	bool bCanAttack = true;
 
 public:	
 	// Called every frame
@@ -58,6 +58,4 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* TakeDamageMontage;
-
-
 };

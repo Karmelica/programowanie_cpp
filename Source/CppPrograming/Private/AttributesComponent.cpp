@@ -71,7 +71,7 @@ void UAttributesComponent::TakeDamage(float DamageAmount)
 			OnDeath.Broadcast();
 		}
 	}
-	else if (OnTakeDamage.IsBound())
+	if (OnTakeDamage.IsBound() && Health > 0.f)
 	{
 		OnTakeDamage.Broadcast();
 	}

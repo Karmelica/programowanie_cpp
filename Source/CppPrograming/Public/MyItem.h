@@ -8,7 +8,6 @@
 
 #include "MyItem.generated.h"
 
-class USphereComponent;
 class UCapsuleComponent;
 
 UCLASS(Blueprintable)
