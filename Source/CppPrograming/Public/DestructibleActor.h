@@ -18,22 +18,22 @@ public:
 	// Sets default values for this actor's properties
 	ADestructibleActor();
 
+private:
+	int HitPoints = 2;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	virtual void GetHit_Implementation(float Damage) override;
-
+	virtual void Bonk();
 public:
 
 	UPROPERTY(EditAnywhere)
-	UMeshComponent* ObjectMesh;
-
-	UPROPERTY(EditDefaultsOnly)
-	USkeletalMeshComponent* SkeletalMesh;
-
-	UPROPERTY(EditDefaultsOnly)
 	UCapsuleComponent* Capsule;
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* ObjectMesh;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

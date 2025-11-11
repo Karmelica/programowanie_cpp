@@ -11,14 +11,11 @@ ADestructibleActor::ADestructibleActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	ObjectMesh = CreateDefaultSubobject<UMeshComponent>(TEXT("ObjectMesh"));
-	RootComponent = ObjectMesh;
-
-	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
-	SkeletalMesh->SetupAttachment(RootComponent);
-
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	Capsule->SetupAttachment(RootComponent);
+	RootComponent = Capsule;
+
+	ObjectMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ObjectMesh"));
+	ObjectMesh->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -30,8 +27,16 @@ void ADestructibleActor::BeginPlay()
 
 void ADestructibleActor::GetHit_Implementation(float Damage)
 {
-	ICombatInterface::GetHit_Implementation(Damage);
+	Bonk();
+}
 
+void ADestructibleActor::Bonk()
+{
+	HitPoints--;
+	if (HitPoints <= 0)
+	{
+		Destroy();
+	}
 }
 
 

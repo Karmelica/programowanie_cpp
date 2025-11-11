@@ -122,8 +122,6 @@ void AMyBaseWeapon::OnHit(const FHitResult& HitResult)
 		{
 			ICombatInterface::Execute_GetHit(HitActor, 20.f);
 		}
-		
-
 
 		/*if (bShowDebugTrace)
 		{
