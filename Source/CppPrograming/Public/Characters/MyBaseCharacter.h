@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CombatInterface.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/CombatInterface.h"
 #include "MyBaseCharacter.generated.h"
 
 class AMyBaseWeapon;

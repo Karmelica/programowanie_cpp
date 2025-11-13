@@ -1,8 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DestructibleActor.h"
-
+#include "Items/DestructibleActor.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values

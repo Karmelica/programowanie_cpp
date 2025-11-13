@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "DisableAttack.h"
-#include "MyBaseCharacter.h"
-#include "MyBaseWeapon.h"
+#include "Animations/DisableAttack.h"
+#include "Characters/MyBaseCharacter.h"
+#include "Items/MyBaseWeapon.h"
 
 void UDisableAttack::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
-	const FAnimNotifyEventReference& EventReference)
+                            const FAnimNotifyEventReference& EventReference)
 {
 	Super::Notify(MeshComp, Animation, EventReference);
 

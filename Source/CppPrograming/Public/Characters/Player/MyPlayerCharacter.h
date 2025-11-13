@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
-#include "MyBaseCharacter.h"
+#include "Characters/MyBaseCharacter.h"
 #include "MyPlayerCharacter.generated.h"
 
 class UMyInteractorComponent;

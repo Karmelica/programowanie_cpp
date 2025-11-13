@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CombatInterface.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/CombatInterface.h"
 #include "DestructibleActor.generated.h"
 
 class UCapsuleComponent;

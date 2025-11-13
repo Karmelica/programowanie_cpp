@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MyBaseCharacter.h"
-#include "MyBaseWeapon.h"
-#include "AttributesComponent.h"
+#include "Characters/MyBaseCharacter.h"
+#include "Characters/Player/AttributesComponent.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values

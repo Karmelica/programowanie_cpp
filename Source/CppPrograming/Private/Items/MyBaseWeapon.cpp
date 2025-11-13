@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MyBaseWeapon.h"
-
-#include "MyBaseCharacter.h"
+#include "Items/MyBaseWeapon.h"
+#include "Characters/MyBaseCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "DrawDebugHelpers.h"

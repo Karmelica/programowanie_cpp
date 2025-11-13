@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PlayerInterface.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/PlayerInterface.h"
 
 #include "MyItem.generated.h"
 

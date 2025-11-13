@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SetWeaponHitbox.h"
-#include "MyBaseCharacter.h"
-#include "MyBaseWeapon.h"
+#include "Animations/SetWeaponHitbox.h"
+#include "Characters/MyBaseCharacter.h"
+#include "Items/MyBaseWeapon.h"
 
 void USetWeaponHitbox::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration,
                                    const FAnimNotifyEventReference& EventReference)

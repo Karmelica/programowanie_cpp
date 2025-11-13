@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "KillCharacter.h"
-
-#include "MyBaseCharacter.h"
+#include "Characters/KillCharacter.h"
+#include "Characters/MyBaseCharacter.h"
 
 void UKillCharacter::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
                             const FAnimNotifyEventReference& EventReference)

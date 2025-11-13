@@ -1,12 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MyPlayerCharacter.h"
+#include "Characters/Player/MyPlayerCharacter.h"
+
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-#include "MyInteractorComponent.h"
+#include "Characters/Player/MyInteractorComponent.h"
 
 
 AMyPlayerCharacter::AMyPlayerCharacter()
@@ -95,7 +96,7 @@ void AMyPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	{
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Move);
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMyPlayerCharacter::Look);
-		Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		Input->BindAction(InteractAction, ETriggerEvent::Started, this, &AMyPlayerCharacter::PlayerInteract);
 		Input->BindAction(AttackAction, ETriggerEvent::Started, this, &AMyPlayerCharacter::Attack);
 

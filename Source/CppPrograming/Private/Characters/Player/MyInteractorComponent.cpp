@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MyInteractorComponent.h"
-
-#include "MyPlayerCharacter.h"
-#include "PlayerInterface.h"
+#include "Characters/Player/MyInteractorComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include <Interfaces/PlayerInterface.h>
+
+#include "Characters/Player/MyPlayerCharacter.h"
 
 
 // Sets default values for this component's properties
