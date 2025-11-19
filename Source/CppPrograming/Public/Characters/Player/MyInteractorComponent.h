@@ -16,7 +16,7 @@ public:
 	// Sets default values for this component's properties
 
 	UPROPERTY(EditDefaultsOnly)
-	float TraceSphereRadius;
+	float TraceSphereRadius = 25.f;
 	UPROPERTY(VisibleAnywhere)
 	TArray<AActor*> IgnoreActors;
 

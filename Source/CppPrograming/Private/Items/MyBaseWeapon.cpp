@@ -4,6 +4,7 @@
 #include "Items/MyBaseWeapon.h"
 #include "Characters/MyBaseCharacter.h"
 #include "Components/BoxComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 void AMyBaseWeapon::Interact_Implementation(AActor* OuterActor)
@@ -53,6 +54,7 @@ void AMyBaseWeapon::Equip(AActor* OuterActor)
 		Character->SetEquippedWeapon(this);
 		// Wy³¹cz hitbox po ekwipowaniu (domyœlnie)
 		DisableHitbox();
+		Capsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 }
 
@@ -81,8 +83,8 @@ void AMyBaseWeapon::BoxTrace(FHitResult& OutHit)
 	const FVector End = TraceEnd->GetComponentLocation();
 	
 	// Pobierz wymiary box collider z SwordHitbox
-	const FVector BoxExtent = SwordHitbox->GetScaledBoxExtent();
-	
+	FVector BoxExtent = SwordHitbox->GetScaledBoxExtent()/1.8f;
+
 	// Pobierz rotacjê z SwordHitbox (zamiast z TraceStart)
 	const FRotator BoxRotation = SwordHitbox->GetComponentRotation();
 	
@@ -154,14 +156,11 @@ void AMyBaseWeapon::OnHit(const FHitResult& HitResult)
 void AMyBaseWeapon::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorBeginOverlap(OtherActor);
-	if (AMyBaseCharacter* Enemy = Cast<AMyBaseCharacter>(OtherActor))
+	if (AActor* HitActor = Cast<AActor>(OtherActor))
 	{
-		if (bShouldTrace && Enemy != GetOwner())
-		{
-			PerformBoxTrace();
-			DisableHitbox();
-		}
-
+		if (!bShouldTrace || HitActor == GetOwner()) return;
+		DisableHitbox();
+		PerformBoxTrace();
 	}
 }
 

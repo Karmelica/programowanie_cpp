@@ -18,8 +18,8 @@ private:
 	virtual void Tick(float DeltaSeconds) override;
 
 protected:
-
 	AMyBaseWeapon();
+
 
 	bool bShouldTrace;
 
