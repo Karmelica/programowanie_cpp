@@ -22,12 +22,16 @@ protected:
 	AMyPlayerCharacter();
 
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 	void Move(const FInputActionValue& InputActionValue);
 	void Look(const FInputActionValue& InputActionValue);
-	void PlayerInteract();
+	void SetSprinting();
+
+	virtual void Jump() override;
+	void Interact();
 	virtual void Attack() override;
 
 
@@ -36,6 +40,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* JumpAction;
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	float JumpCost;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* MoveAction;
@@ -49,6 +55,13 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputAction* InteractAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
+	UInputAction* SprintAction;
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	float SprintCost;
+
+	bool bIsSprinting = false;
+
 private:
 
 	UPROPERTY(EditAnywhere)
@@ -59,6 +72,8 @@ private:
 	UMyInteractorComponent* InteractorComponent;
 
 public:
+	UFUNCTION(BlueprintCallable)
+	bool GetSprinting() const { return bIsSprinting; }
 	UMyInteractorComponent* GetInteractorComponent() const { return InteractorComponent; }
 	FVector GetCameraLocation();
 	FVector GetCameraForwardVector();

@@ -1,9 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Characters/MyBaseCharacter.h"
 #include "Characters/Player/AttributesComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Enums/EPawnState.h"
+#include "Items/MyBaseWeapon.h"
 
 // Sets default values
 AMyBaseCharacter::AMyBaseCharacter()
@@ -13,6 +12,7 @@ AMyBaseCharacter::AMyBaseCharacter()
 
 	// Create and attach the Attributes component
 	AttributesComponent = CreateDefaultSubobject<UAttributesComponent>(TEXT("AttributesComponent"));
+	CurrentState = EPawnState::Idle;
 }
 
 // Called when the game starts or when spawned
@@ -30,14 +30,19 @@ void AMyBaseCharacter::BeginPlay()
 
 void AMyBaseCharacter::Attack()
 {
-	if (!AttackMontage || !bCanAttack || !EquippedWeapon) return;
+	if (!AttackMontage || !bCanAttack || !EquippedWeapon || CurrentState == EPawnState::Hit) return;
 	PlayAnimMontage(AttackMontage);
 }
 
-// Called every frame
-void AMyBaseCharacter::Tick(float DeltaTime)
+void AMyBaseCharacter::Jump()
 {
-	Super::Tick(DeltaTime);
+	Super::Jump();
+}
+
+// Called every frame
+void AMyBaseCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 
 }
 
@@ -53,6 +58,18 @@ void AMyBaseCharacter::GetHitAnim()
 {
 	if (!TakeDamageMontage) return;
 	PlayAnimMontage(TakeDamageMontage);
+}
+
+void AMyBaseCharacter::DamageTaken()
+{
+	CurrentState = EPawnState::Hit;
+	//UE_LOG(LogTemp, Warning, TEXT("%s DamageTaken() called"), *GetName());
+}
+
+void AMyBaseCharacter::DamageTakenEnd()
+{
+	CurrentState = EPawnState::Idle;
+	//UE_LOG(LogTemp, Warning, TEXT("%s DamageTakenEnd() called"), *GetName());
 }
 
 void AMyBaseCharacter::HandleDeath()
@@ -71,10 +88,24 @@ void AMyBaseCharacter::SetCanAttack(bool bAttack)
 	bCanAttack = bAttack;
 }
 
+void AMyBaseCharacter::SetWeaponHitbox(bool bActive)
+{
+	AMyBaseWeapon* Weapon = EquippedWeapon;
+	if (!Weapon) return;
+
+	if (bActive){
+		Weapon->ClearHitActors();
+		Weapon->EnableHitbox();
+	}
+	else{
+		Weapon->DisableHitbox();
+	}
+}
+
 void AMyBaseCharacter::Die()
 {
 	StopAnimMontage(DeathMontage);
-	UE_LOG(LogTemp, Warning, TEXT("%s Die() called - destroying actor"), *GetName());
+	//UE_LOG(LogTemp, Warning, TEXT("%s Die() called - destroying actor"), *GetName());
 	Destroy();
 }
 
@@ -89,4 +120,5 @@ void AMyBaseCharacter::SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon)
 {
 	EquippedWeapon = MyBaseWeapon;
 }
+
 

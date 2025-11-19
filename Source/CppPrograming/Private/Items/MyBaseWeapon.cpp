@@ -5,12 +5,22 @@
 #include "Characters/MyBaseCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "DrawDebugHelpers.h"
 
 void AMyBaseWeapon::Interact_Implementation(AActor* OuterActor)
 {
 	Super::Interact_Implementation(OuterActor);
 	Equip(OuterActor);
+}
+
+void AMyBaseWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+	DisableHitbox();
+}
+
+void AMyBaseWeapon::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 }
 
 AMyBaseWeapon::AMyBaseWeapon()
@@ -24,6 +34,8 @@ AMyBaseWeapon::AMyBaseWeapon()
 
 	TraceEnd = CreateDefaultSubobject<USceneComponent>(TEXT("TraceEnd"));
 	TraceEnd->SetupAttachment(RootComponent);
+
+	bShouldTrace = false;
 }
 
 void AMyBaseWeapon::AttachToSocket(USceneComponent* InParent, FName& InSocketName)
@@ -50,6 +62,7 @@ void AMyBaseWeapon::EnableHitbox()
 	//UE_LOG(LogTemp, Warning, TEXT("Weapon Hitbox ENABLED"));
 	SwordHitbox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	SwordHitbox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	bShouldTrace = true;
 }
 
 void AMyBaseWeapon::DisableHitbox()
@@ -57,6 +70,7 @@ void AMyBaseWeapon::DisableHitbox()
 	if (!SwordHitbox) return;
 	//UE_LOG(LogTemp, Warning, TEXT("Weapon Hitbox DISABLED"));
 	SwordHitbox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	bShouldTrace = false;
 }
 
 void AMyBaseWeapon::BoxTrace(FHitResult& OutHit)
@@ -134,6 +148,20 @@ void AMyBaseWeapon::OnHit(const FHitResult& HitResult)
 				3.0f
 			);
 		}*/
+	}
+}
+
+void AMyBaseWeapon::NotifyActorBeginOverlap(AActor* OtherActor)
+{
+	Super::NotifyActorBeginOverlap(OtherActor);
+	if (AMyBaseCharacter* Enemy = Cast<AMyBaseCharacter>(OtherActor))
+	{
+		if (bShouldTrace && Enemy != GetOwner())
+		{
+			PerformBoxTrace();
+			DisableHitbox();
+		}
+
 	}
 }
 

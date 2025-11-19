@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,6 +5,7 @@
 #include "Interfaces/CombatInterface.h"
 #include "MyBaseCharacter.generated.h"
 
+enum class EPawnState;
 class AMyBaseWeapon;
 class UAttributesComponent;
 
@@ -22,11 +21,19 @@ public:
 
 	void SetEquippedWeapon(AMyBaseWeapon* MyBaseWeapon);
 
-	void SetCanAttack(bool bAttack);
 	void Die();
 
 protected:
 	bool bCanAttack = true;
+
+	UFUNCTION(BlueprintCallable, Category="Combat")
+	void SetCanAttack(bool bAttack);
+
+	UFUNCTION(BlueprintCallable, Category="Hitbox")
+	void SetWeaponHitbox(bool bActive);
+
+	UPROPERTY(VisibleAnywhere, Category = "State")
+	EPawnState CurrentState;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAttributesComponent* AttributesComponent;
@@ -34,15 +41,21 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void Attack();
+	virtual void Jump() override;
 
 	UFUNCTION()
 	virtual void HandleDeath();
 	UFUNCTION()
 	virtual void GetHitAnim();
 
+	UFUNCTION(BlueprintCallable)
+	void DamageTaken();
+	UFUNCTION(BlueprintCallable)
+	void DamageTakenEnd();
+
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -58,4 +71,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* TakeDamageMontage;
+
 };
+

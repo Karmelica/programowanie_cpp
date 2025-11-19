@@ -24,31 +24,40 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	float MaxHealth;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attributes")
+	UPROPERTY(VisibleAnywhere, Category = "Attributes")
 	float Health;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	float MaxStamina;
+
+	UPROPERTY(VisibleAnywhere, Category = "Attributes")
+	float Stamina;
+
+	bool bDraining;
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	// Getters
-	UFUNCTION(BlueprintCallable, Category = "Attributes")
-	float GetHealth() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Attributes")
-	float GetMaxHealth() const;
-
-	// Setter
-	UFUNCTION(BlueprintCallable, Category = "Attributes")
-	void SetHealth(float NewHealth);
+	UPROPERTY(EditDefaultsOnly, Category = "Attributes")
+	float RegenSpeed;
 
 	// Apply damage function
 	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	void TakeDamage(float DamageAmount);
 
+	//Drain stamina
+	void DrainStamina(float ActionStamina);
+
+	//Recover stamina
+	void RecoverStamina(float RecoveredStamina);
+
 	// Check if alive
 	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	bool IsAlive() const;
+
+	bool SufficientStamina(float ActionStamina) const;
 
 	// Death delegate
 	UPROPERTY(BlueprintAssignable, Category = "Attributes")
