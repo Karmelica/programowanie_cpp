@@ -7,6 +7,10 @@
 #include "AttributesComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDamageSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnStaminaChangedSignature, float, CurrentStamina, float, MaxStamina);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnHealthChanged, float, CurrentHealth, float, MaxHealth);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CPPPROGRAMING_API UAttributesComponent : public UActorComponent
@@ -15,11 +19,25 @@ class CPPPROGRAMING_API UAttributesComponent : public UActorComponent
 
 public:	
 	// Sets default values for this component's properties
-	UAttributesComponent();
+	
+
+	UPROPERTY(EditDefaultsOnly, Category = "Attributes")
+	float RegenSpeed;
+
+	// Death delegate
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnDeathSignature OnDeath;
+
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnDamageSignature OnTakeDamage;
+
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnStaminaChangedSignature OnStaminaChanged;
+
+	UPROPERTY(BlueprintAssignable, Category = "Attributes")
+	FOnHealthChanged OnHealthChanged;
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	float MaxHealth;
@@ -36,13 +54,8 @@ protected:
 
 	bool bDraining;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Attributes")
-	float RegenSpeed;
-
+public:
+	
 	// Apply damage function
 	UFUNCTION(BlueprintCallable, Category = "Attributes")
 	void TakeDamage(float DamageAmount);
@@ -59,10 +72,16 @@ public:
 
 	bool SufficientStamina(float ActionStamina) const;
 
-	// Death delegate
-	UPROPERTY(BlueprintAssignable, Category = "Attributes")
-	FOnDeathSignature OnDeath;
+	UFUNCTION()
+	float CurrentStamina() const { return Stamina; }
+	UFUNCTION()
+	float CurrentHealth() const { return Health; }
 
-	UPROPERTY(BlueprintAssignable, Category = "Attributes")
-	FOnDeathSignature OnTakeDamage;
+protected:
+	UAttributesComponent();
+
+	// Called when the game starts
+	virtual void BeginPlay() override;
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 };

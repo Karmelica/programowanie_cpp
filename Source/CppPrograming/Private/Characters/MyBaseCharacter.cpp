@@ -58,17 +58,23 @@ void AMyBaseCharacter::GetHitAnim()
 {
 	if (!TakeDamageMontage) return;
 	PlayAnimMontage(TakeDamageMontage);
+	if (!AttackMontage) return;
+	StopAnimMontage(AttackMontage);
 }
 
 void AMyBaseCharacter::DamageTaken()
 {
 	CurrentState = EPawnState::Hit;
+	bCanAttack = false;
+	if (!EquippedWeapon) return;
+	SetWeaponHitbox(false);
 	//UE_LOG(LogTemp, Warning, TEXT("%s DamageTaken() called"), *GetName());
 }
 
 void AMyBaseCharacter::DamageTakenEnd()
 {
 	CurrentState = EPawnState::Idle;
+	bCanAttack = true;
 	//UE_LOG(LogTemp, Warning, TEXT("%s DamageTakenEnd() called"), *GetName());
 }
 

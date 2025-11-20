@@ -13,6 +13,7 @@ UAttributesComponent::UAttributesComponent()
 	MaxHealth = 100.f;
 	Stamina = 200.f;
 	RegenSpeed = 10.f;
+
 }
 
 

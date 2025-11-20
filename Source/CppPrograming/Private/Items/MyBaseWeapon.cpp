@@ -17,6 +17,10 @@ void AMyBaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	DisableHitbox();
+	if (AMyBaseCharacter* MyOwner = Cast<AMyBaseCharacter>(GetOwner()))
+	{
+		MyOwner->SetEquippedWeapon(this);
+	}
 }
 
 void AMyBaseWeapon::Tick(float DeltaSeconds)

@@ -2,4 +2,12 @@
 
 
 #include "Characters/MyEnemyCharacter.h"
+#include "Perception/PawnSensingComponent.h"
+
+
+AMyEnemyCharacter::AMyEnemyCharacter()
+{
+	AIComponent = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("AIComponent"));
+}
+
 

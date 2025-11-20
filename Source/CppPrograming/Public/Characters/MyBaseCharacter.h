@@ -29,6 +29,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Combat")
 	void SetCanAttack(bool bAttack);
 
+	UFUNCTION(BlueprintCallable, Category="Combat")
+	bool GetCanAttack() const { return bCanAttack; }
+
 	UFUNCTION(BlueprintCallable, Category="Hitbox")
 	void SetWeaponHitbox(bool bActive);
 
@@ -53,14 +56,14 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void DamageTakenEnd();
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon")
 	AMyBaseWeapon* EquippedWeapon;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
@@ -71,6 +74,4 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	UAnimMontage* TakeDamageMontage;
-
 };
-
