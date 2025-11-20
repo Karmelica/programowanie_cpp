@@ -7,12 +7,17 @@
 #include "MyUserWidget.generated.h"
 
 
+class UAttributesComponent;
 class UProgressBar;
 
 UCLASS()
 class CPPPROGRAMING_API UMyUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+private:
+	UPROPERTY(EditAnywhere)
+	UAttributesComponent* AttributesComponent;
 
 public:
 	UPROPERTY(meta = (BindWidget))
@@ -23,7 +28,14 @@ public:
 
 protected:
 
+	virtual void NativePreConstruct() override;
+
 public:
+	UFUNCTION()
+	void AssignAttributesComponent(UAttributesComponent* NewAttributesComponent){ AttributesComponent = NewAttributesComponent; };
+
+	UFUNCTION()
 	void UpdateHealth(float Current, float Max);
+	UFUNCTION()
 	void UpdateStamina(float Current, float Max);
 };

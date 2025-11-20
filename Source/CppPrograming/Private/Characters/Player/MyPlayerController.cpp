@@ -1,11 +1,25 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Characters/Player/MyPlayerController.h"
 
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "Engine/LocalPlayer.h"
+#include "Blueprint/UserWidget.h"
+#include "Characters/MyBaseCharacter.h"
+#include "Characters/Player/UI/MyUserWidget.h"
+
+
+void AMyPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (PlayerHUD)
+	{
+		PlayerHUD->AddToViewport();
+	}
+
+}
 
 void AMyPlayerController::SetupInputComponent()
 {

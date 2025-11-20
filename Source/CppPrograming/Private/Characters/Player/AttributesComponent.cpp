@@ -16,7 +16,6 @@ UAttributesComponent::UAttributesComponent()
 
 }
 
-
 // Called when the game starts
 void UAttributesComponent::BeginPlay()
 {

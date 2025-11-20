@@ -10,6 +10,7 @@
 #include "Characters/Player/AttributesComponent.h"
 #include "Characters/Player/MyInteractorComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Blueprint/UserWidget.h"
 
 
 AMyPlayerCharacter::AMyPlayerCharacter()
@@ -30,7 +31,6 @@ AMyPlayerCharacter::AMyPlayerCharacter()
 void AMyPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void AMyPlayerCharacter::Tick(float DeltaSeconds)

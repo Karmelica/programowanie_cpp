@@ -18,22 +18,17 @@ class CPPPROGRAMING_API AMyPlayerCharacter : public AMyBaseCharacter
 {
 	GENERATED_BODY()
 
+
+private:
+
+	UPROPERTY(EditAnywhere)
+	USpringArmComponent* CameraBoom;
+	UPROPERTY(EditAnywhere)
+	UCameraComponent* ViewCamera;
+	UPROPERTY(EditAnywhere)
+	UMyInteractorComponent* InteractorComponent;
+
 protected:
-	AMyPlayerCharacter();
-
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaSeconds) override;
-
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
-	void Move(const FInputActionValue& InputActionValue);
-	void Look(const FInputActionValue& InputActionValue);
-	void SetSprinting();
-
-	virtual void Jump() override;
-	void Interact();
-	virtual void Attack() override;
-
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 	UInputMappingContext* DefaultMappingContext;
@@ -62,14 +57,22 @@ protected:
 
 	bool bIsSprinting = false;
 
-private:
+protected:
 
-	UPROPERTY(EditAnywhere)
-	USpringArmComponent* CameraBoom;
-	UPROPERTY(EditAnywhere)
-	UCameraComponent* ViewCamera;
-	UPROPERTY(EditAnywhere)
-	UMyInteractorComponent* InteractorComponent;
+	AMyPlayerCharacter();
+
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
+
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
+	void Move(const FInputActionValue& InputActionValue);
+	void Look(const FInputActionValue& InputActionValue);
+	void SetSprinting();
+
+	virtual void Jump() override;
+	void Interact();
+	virtual void Attack() override;
 
 public:
 	UFUNCTION(BlueprintCallable)
