@@ -31,8 +31,6 @@ protected:
 	virtual void NativePreConstruct() override;
 
 public:
-	UFUNCTION()
-	void AssignAttributesComponent(UAttributesComponent* NewAttributesComponent){ AttributesComponent = NewAttributesComponent; };
 
 	UFUNCTION()
 	void UpdateHealth(float Current, float Max);

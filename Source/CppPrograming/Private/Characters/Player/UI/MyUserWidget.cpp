@@ -2,8 +2,6 @@
 
 
 #include "Characters/Player/UI/MyUserWidget.h"
-
-#include "Characters/Player/AttributesComponent.h"
 #include "Components/ProgressBar.h"
 
 

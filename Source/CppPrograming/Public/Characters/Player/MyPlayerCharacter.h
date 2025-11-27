@@ -71,8 +71,8 @@ protected:
 	void SetSprinting();
 
 	virtual void Jump() override;
-	void Interact();
 	virtual void Attack() override;
+	void Interact();
 
 public:
 	UFUNCTION(BlueprintCallable)
