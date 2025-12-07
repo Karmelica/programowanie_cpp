@@ -6,25 +6,11 @@
 #include "MyBaseCharacter.h"
 #include "MyEnemyCharacter.generated.h"
 
-class AMyPlayerCharacter;
-class UPawnSensingComponent;
+class UAISenseConfig_Sight;
+class UAIPerceptionComponent;
 
 UCLASS()
 class CPPPROGRAMING_API AMyEnemyCharacter : public AMyBaseCharacter
 {
 	GENERATED_BODY()
-
-private:
-	UPROPERTY()
-	AMyPlayerCharacter* PlayerCharacter;
-
-protected:
-
-	UPROPERTY(EditDefaultsOnly, Category="AI")
-	UPawnSensingComponent* AIComponent;
-
-private:
-protected:
-
-	AMyEnemyCharacter();
 };
