@@ -5,7 +5,7 @@
 #include "Interfaces/CombatInterface.h"
 #include "MyBaseCharacter.generated.h"
 
-enum class EPawnState;
+enum class EPawnState : uint8;
 class AMyBaseWeapon;
 class UAttributesComponent;
 
@@ -35,8 +35,6 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Hitbox")
 	void SetWeaponHitbox(bool bActive);
 
-	UPROPERTY(VisibleAnywhere, Category = "State")
-	EPawnState CurrentState;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UAttributesComponent* AttributesComponent;
@@ -62,6 +60,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
+	UPROPERTY(EditAnywhere, Category = "State")
+	EPawnState CurrentState;
 
 	UFUNCTION()
 	UAttributesComponent* GetAttributesComponent() const { return AttributesComponent; }

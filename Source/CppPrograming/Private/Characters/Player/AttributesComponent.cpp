@@ -24,6 +24,15 @@ void UAttributesComponent::BeginPlay()
 	// Initialize health to max health at start
 	Health = MaxHealth;
 	Stamina = MaxStamina;
+
+	if (OnStaminaChanged.IsBound())
+	{
+		OnStaminaChanged.Broadcast(Stamina, MaxStamina);
+	}
+	if (OnHealthChanged.IsBound())
+	{
+		OnHealthChanged.Broadcast(Health, MaxHealth);
+	}
 }
 
 // Called every frame
@@ -55,18 +64,29 @@ void UAttributesComponent::TakeDamage(float DamageAmount)
 	{
 		OnTakeDamage.Broadcast();
 	}
+	if (OnHealthChanged.IsBound())
+	{
+		OnHealthChanged.Broadcast(Health, MaxHealth);
+	}
 }
 
 void UAttributesComponent::DrainStamina(float ActionStamina)
 {
 	Stamina = FMath::Clamp(Stamina - ActionStamina, 0.0f, MaxStamina);
+	if (OnStaminaChanged.IsBound())
+	{
+		OnStaminaChanged.Broadcast(Stamina, MaxStamina);
+	}
 }
 
 void UAttributesComponent::RecoverStamina(float RecoveredStamina)
 {
 	if (Stamina >= MaxStamina || bDraining) return;
 	Stamina = FMath::Clamp(Stamina + RecoveredStamina, 0.0f, MaxStamina);
-	//UE_LOG(LogTemp, Warning, TEXT("Stamina: %.2f / %.2f"), Stamina, MaxStamina);
+	if (OnStaminaChanged.IsBound())
+	{
+		OnStaminaChanged.Broadcast(Stamina, MaxStamina);
+	}
 }
 
 bool UAttributesComponent::SufficientStamina(float ActionStamina) const

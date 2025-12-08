@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "MyPlayerController.generated.h"
 
+class UAttributesComponent;
+class AMyPlayerCharacter;
 class UMyUserWidget;
 class UInputMappingContext;
 
@@ -23,9 +25,12 @@ protected:
 	/** Input Mapping Contexts */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = "true"))
 	TArray<UInputMappingContext*> DefaultMappingContexts;
+	AMyPlayerCharacter* PlayerCharacter;
+	UAttributesComponent* AttributesComponent;
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void OnPossess(APawn* InPawn) override;
 
 	/** Input mapping context setup */
 	virtual void SetupInputComponent() override;

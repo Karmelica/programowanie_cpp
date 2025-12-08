@@ -6,30 +6,42 @@
 #include "InputMappingContext.h"
 #include "Engine/LocalPlayer.h"
 #include "Blueprint/UserWidget.h"
-#include "Characters/MyBaseCharacter.h"
+#include "Characters/Player/AttributesComponent.h"
+#include "Characters/Player/MyPlayerCharacter.h"
 #include "Characters/Player/UI/MyUserWidget.h"
 
 
 void AMyPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void AMyPlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
 
 	if (PlayerHUD)
 	{
 		PlayerHUD->AddToViewport();
 	}
-
-}
-
-void AMyPlayerController::SetupInputComponent()
-{
-	Super::SetupInputComponent();
-	// Add Input Mapping Contexts
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+	PlayerCharacter = Cast<AMyPlayerCharacter>(InPawn);
+	if (PlayerCharacter)
 	{
-		for (UInputMappingContext* CurrentContext : DefaultMappingContexts)
-		{
-			Subsystem->AddMappingContext(CurrentContext, 0);
-		}
+		AttributesComponent = PlayerCharacter->GetAttributesComponent();
+
+		AttributesComponent->OnHealthChanged.AddDynamic(PlayerHUD, &UMyUserWidget::UpdateHealth);
+		AttributesComponent->OnStaminaChanged.AddDynamic(PlayerHUD, &UMyUserWidget::UpdateStamina);
 	}
 }
+
+	void AMyPlayerController::SetupInputComponent()
+	{
+		Super::SetupInputComponent();
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+		{
+			for (UInputMappingContext* CurrentContext : DefaultMappingContexts)
+			{
+				Subsystem->AddMappingContext(CurrentContext, 0);
+			}
+		}
+	}

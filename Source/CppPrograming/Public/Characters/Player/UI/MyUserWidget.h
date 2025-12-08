@@ -28,12 +28,10 @@ public:
 
 protected:
 
-	virtual void NativePreConstruct() override;
-
 public:
 
 	UFUNCTION()
-	void UpdateHealth(float Current, float Max);
+	void UpdateHealth(float Current, float Max) ;
 	UFUNCTION()
-	void UpdateStamina(float Current, float Max);
+	void UpdateStamina(float Current, float Max) ;
 };

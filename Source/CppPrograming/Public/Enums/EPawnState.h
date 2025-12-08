@@ -3,9 +3,12 @@
 #pragma once
 
 UENUM()
-enum class EPawnState
+enum class EPawnState : uint8
 {
 	Idle UMETA(DisplayName = "Idle"),
 	InCombat UMETA(DisplayName = "In Combat"),
-	Hit UMETA(DisplayName = "Getting Hit")
+	Hit UMETA(DisplayName = "Getting Hit"),
+	Dead UMETA(DisplayName = "Dead"),
+	Patrol UMETA(DisplayName = "Patrol"),
+	Fight UMETA(DisplayName = "Fight")
 };
