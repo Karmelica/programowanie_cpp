@@ -6,9 +6,6 @@
 #include "MyBaseCharacter.h"
 #include "MyEnemyCharacter.generated.h"
 
-class UAISenseConfig_Sight;
-class UAIPerceptionComponent;
-
 UCLASS()
 class CPPPROGRAMING_API AMyEnemyCharacter : public AMyBaseCharacter
 {
