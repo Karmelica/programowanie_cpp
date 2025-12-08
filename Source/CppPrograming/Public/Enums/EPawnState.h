@@ -2,7 +2,7 @@
 
 #pragma once
 
-UENUM()
+UENUM(BlueprintType)
 enum class EPawnState : uint8
 {
 	Idle UMETA(DisplayName = "Idle"),

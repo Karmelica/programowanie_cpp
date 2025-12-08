@@ -13,3 +13,5 @@ AAiBaseController::AAiBaseController()
 	SightSenseConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
 	PerceptionComponent->ConfigureSense(*SightSenseConfig);
 }
+
+

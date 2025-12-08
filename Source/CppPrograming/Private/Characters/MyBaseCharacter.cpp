@@ -12,7 +12,7 @@ AMyBaseCharacter::AMyBaseCharacter()
 
 	// Create and attach the Attributes component
 	AttributesComponent = CreateDefaultSubobject<UAttributesComponent>(TEXT("AttributesComponent"));
-	CurrentState = EPawnState::Idle;
+	CurrentState = EPawnState::Patrol;
 }
 
 // Called when the game starts or when spawned
@@ -73,7 +73,7 @@ void AMyBaseCharacter::DamageTaken()
 
 void AMyBaseCharacter::DamageTakenEnd()
 {
-	CurrentState = EPawnState::Idle;
+	CurrentState = EPawnState::Patrol;
 	bCanAttack = true;
 	//UE_LOG(LogTemp, Warning, TEXT("%s DamageTakenEnd() called"), *GetName());
 }
