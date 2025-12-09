@@ -19,6 +19,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 	UAISenseConfig_Sight* SightSenseConfig;
 
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
+	UObject* SeenActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
+	FVector PlayerLocation;
+
 protected:
 	AAiBaseController();
 };
