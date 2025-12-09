@@ -48,8 +48,8 @@ void UAttributesComponent::TakeDamage(float DamageAmount)
 	float OldHealth = Health;
 	Health = FMath::Clamp(Health - DamageAmount, 0.0f, MaxHealth);
 
-	UE_LOG(LogTemp, Warning, TEXT("%s took %.2f damage. Health: %.2f / %.2f"), 
-		*GetOwner()->GetName(), DamageAmount, Health, MaxHealth);
+	//UE_LOG(LogTemp, Warning, TEXT("%s took %.2f damage. Health: %.2f / %.2f"), 
+	//	*GetOwner()->GetName(), DamageAmount, Health, MaxHealth);
 
 	// Broadcast death if health reached zero
 	if (OldHealth > 0.0f && Health <= 0.0f)

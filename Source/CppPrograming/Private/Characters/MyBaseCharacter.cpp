@@ -81,7 +81,8 @@ void AMyBaseCharacter::DamageTakenEnd()
 
 void AMyBaseCharacter::HandleDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s HandleDeath() called"), *GetName());
+	//UE_LOG(LogTemp, Warning, TEXT("%s HandleDeath() called"), *GetName());
+	CurrentState = EPawnState::Dead;
 	if (!DeathMontage) return;
 	PlayAnimMontage(DeathMontage);
 	if (UCapsuleComponent* capsule = GetCapsuleComponent())
