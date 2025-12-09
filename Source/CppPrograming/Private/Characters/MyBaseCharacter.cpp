@@ -64,6 +64,7 @@ void AMyBaseCharacter::GetHitAnim()
 
 void AMyBaseCharacter::DamageTaken()
 {
+	LastState = CurrentState;
 	CurrentState = EPawnState::Hit;
 	bCanAttack = false;
 	if (!EquippedWeapon) return;
@@ -73,7 +74,7 @@ void AMyBaseCharacter::DamageTaken()
 
 void AMyBaseCharacter::DamageTakenEnd()
 {
-	CurrentState = EPawnState::Patrol;
+	CurrentState = LastState;
 	bCanAttack = true;
 	//UE_LOG(LogTemp, Warning, TEXT("%s DamageTakenEnd() called"), *GetName());
 }

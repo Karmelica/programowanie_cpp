@@ -65,13 +65,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "State")
 	EPawnState CurrentState;
 
+	EPawnState LastState;
+
 	UFUNCTION()
 	UAttributesComponent* GetAttributesComponent() const { return AttributesComponent; }
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Weapon")
 	AMyBaseWeapon* EquippedWeapon;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
 	UAnimMontage* AttackMontage;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
